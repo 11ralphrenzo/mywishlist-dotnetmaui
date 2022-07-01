@@ -17,8 +17,14 @@ public static class MauiProgram
 			});
 		
 		// Serices
+
+		// Permanent
 		builder.Services.AddSingleton<MainPage>();
 		builder.Services.AddSingleton<MainViewModel>();
+
+		// Temporary
+		builder.Services.AddTransient<DetailPage>();
+		builder.Services.AddTransient<DetailViewModel>();
 
         return builder.Build();
 	}

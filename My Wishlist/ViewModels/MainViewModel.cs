@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using My_Wishlist.Models;
+using My_Wishlist.Pages;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -28,14 +29,21 @@ namespace My_Wishlist.ViewModels
         }
 
         [RelayCommand]
-        void Delete(string name)
+        void Delete(WishItem item)
         {
-            var item = items.FirstOrDefault(item => item.Name == name);
+            var i = items.FirstOrDefault(it => it.Name == item.Name);
 
-                if (item == null)
+            if (i == null)
                 return;
 
             items.Remove(item);
+        }
+
+        [RelayCommand]
+        async Task Tap(WishItem item)
+        {
+            await Shell.Current.GoToAsync(nameof(DetailPage), 
+                new Dictionary<string, object> { { "item", item } });
         }
     }
 }

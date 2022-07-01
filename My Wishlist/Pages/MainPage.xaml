@@ -20,6 +20,7 @@
                 Command="{Binding AddCommand}"/>
         <CollectionView Grid.Row="2"
                         Grid.ColumnSpan="2"
+                        SelectionMode="None"
                         ItemsSource="{Binding Items}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -29,11 +30,15 @@
                                 <SwipeItem Text="Delete"
                                            BackgroundColor="Red"
                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=DeleteCommand}"
-                                           CommandParameter="{Binding Name}"></SwipeItem>
+                                           CommandParameter="{Binding .}"></SwipeItem>
                             </SwipeItems>
                         </SwipeView.RightItems>
                         <Grid Padding="5">
                             <Frame>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=TapCommand}"
+                                                          CommandParameter="{Binding .}"></TapGestureRecognizer>
+                                </Frame.GestureRecognizers>
                                 <Label Text="{Binding Name}" FontSize="16"></Label>
                             </Frame>
                         </Grid>
