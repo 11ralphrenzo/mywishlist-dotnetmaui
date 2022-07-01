@@ -21,6 +21,7 @@ public static class MauiProgram
 		// Permanent
 		builder.Services.AddSingleton<MainPage>();
 		builder.Services.AddSingleton<MainViewModel>();
+		builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
 
 		// Temporary
 		builder.Services.AddTransient<DetailPage>();

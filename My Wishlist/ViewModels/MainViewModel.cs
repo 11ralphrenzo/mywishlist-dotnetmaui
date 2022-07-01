@@ -9,10 +9,7 @@ namespace My_Wishlist.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        public MainViewModel()
-        {
-            this.items = new ObservableCollection<WishItem>();
-        }
+        private readonly IConnectivity connectivity;
 
         [ObservableProperty]
         ObservableCollection<WishItem> items;
@@ -20,11 +17,24 @@ namespace My_Wishlist.ViewModels
         [ObservableProperty]
         string text;
 
+        public MainViewModel(IConnectivity connectivity)
+        {
+            this.items = new ObservableCollection<WishItem>();
+            this.connectivity = connectivity;
+        }
+
         [RelayCommand]
-        void Add()
+        async void Add()
         {
             if (string.IsNullOrEmpty(this.Text))
-                return;  
+                return;
+
+            if (connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                await Shell.Current.DisplayAlert("Error", "No Internet Connection.", "OK");
+                return;
+            }
+
             items.Add(new WishItem { Name = Text });
         }
 
